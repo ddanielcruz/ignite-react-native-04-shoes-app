@@ -15,6 +15,7 @@ import { Loading } from './src/components/Loading'
 import { CartContextProvider } from './src/contexts/CartContext'
 
 OneSignal.initialize('8ef39774-5759-4872-bc67-2bd28b58ab4b')
+OneSignal.Notifications.requestPermission(true)
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold })
