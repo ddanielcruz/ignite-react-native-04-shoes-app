@@ -1,5 +1,6 @@
+import { useEffect } from 'react'
 import { StatusBar } from 'react-native'
-import { OneSignal } from 'react-native-onesignal'
+import { NotificationClickEvent, OneSignal } from 'react-native-onesignal'
 import { NativeBaseProvider } from 'native-base'
 import {
   useFonts,
@@ -19,6 +20,21 @@ OneSignal.Notifications.requestPermission(true)
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold })
+
+  useEffect(() => {
+    const handleNotificationClick = (e: NotificationClickEvent) => {
+      console.log('[NOTIFICATION]', e)
+    }
+
+    OneSignal.Notifications.addEventListener('click', handleNotificationClick)
+
+    return () => {
+      OneSignal.Notifications.removeEventListener(
+        'click',
+        handleNotificationClick,
+      )
+    }
+  }, [])
 
   return (
     <NativeBaseProvider theme={THEME}>
